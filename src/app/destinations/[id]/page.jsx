@@ -12,6 +12,7 @@ import {
 } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
+import { EditForm } from '@/components/EditForm';
 
 const DestinationDetailsPage = async ({ params }) => {
   const { id } = await params;
@@ -44,22 +45,8 @@ const DestinationDetailsPage = async ({ params }) => {
           </Button>
         </Link>
         <div className="flex gap-2">
-          <Button
-            variant="bordered"
-            startContent={<Edit3 size={16} />}
-            size="sm"
-          >
-            Edit
-          </Button>
-          <Button
-            variant="bordered"
-            color="danger"
-            startContent={<Trash2 size={16} />}
-            size="sm"
-            className="bg-red-50"
-          >
-            Cancel
-          </Button>
+          <EditForm destination={destination}></EditForm>
+          <Button variant="danger">Cancel</Button>
         </div>
       </div>
 
@@ -151,7 +138,7 @@ const DestinationDetailsPage = async ({ params }) => {
               <Button
                 color="primary"
                 className="w-full bg-cyan-500 h-12 text-lg font-medium mb-6"
-                endContent={<ArrowRight size={20} />}
+                // endContent={<ArrowRight size={20} />}
               >
                 Book Now
               </Button>
