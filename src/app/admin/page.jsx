@@ -9,7 +9,7 @@ import {
   TextField,
   Select,
 } from '@heroui/react';
-import { redirect } from 'next/dist/server/api-utils';
+import { redirect } from 'next/navigation';
 import React from 'react';
 
 const AdminPage = () => {
@@ -27,6 +27,7 @@ const AdminPage = () => {
       body: JSON.stringify(destination),
     });
     const data = await res.json();
+    redirect('/destinations')
     console.log(data);
   };
 

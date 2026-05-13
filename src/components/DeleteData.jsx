@@ -2,7 +2,8 @@
 
 import { TrashBin } from '@gravity-ui/icons';
 import { AlertDialog, Button } from '@heroui/react';
-import { redirect } from 'next/dist/server/api-utils';
+import { redirect } from 'next/navigation';
+// import { redirect } from 'next/dist/server/api-utils';
 
 export function DeleteData({ destination }) {
  const { destinationName,_id } = destination
