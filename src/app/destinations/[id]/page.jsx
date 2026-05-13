@@ -13,6 +13,7 @@ import {
 import Image from 'next/image';
 import Link from 'next/link';
 import { EditForm } from '@/components/EditForm';
+import { DeleteData } from '@/components/DeleteData';
 
 const DestinationDetailsPage = async ({ params }) => {
   const { id } = await params;
@@ -46,7 +47,7 @@ const DestinationDetailsPage = async ({ params }) => {
         </Link>
         <div className="flex gap-2">
           <EditForm destination={destination}></EditForm>
-          <Button variant="danger">Cancel</Button>
+          <DeleteData destination={destination}></DeleteData>
         </div>
       </div>
 
