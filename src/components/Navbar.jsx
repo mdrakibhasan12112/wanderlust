@@ -7,8 +7,12 @@ import { authClient } from '@/lib/auth-client';
 export default function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
+  const handleSignOut = async () => {
+    await authClient.signOut();
+  };
+
   const { data: session } = authClient.useSession();
-  const user = session?.user
+  const user = session?.user;
   console.log(user);
 
   return (
@@ -79,17 +83,15 @@ export default function Navbar() {
           <Link href="/profile">Profile</Link>
           {user ? (
             <>
-              <div className='flex gap-3 items-center'>
-                <li>
-                  {' '}
-                  <Avatar>
-                    <Avatar.Image alt="John Doe" src={user?.image} />
-                    <Avatar.Fallback>{user.name.charAt(0)}</Avatar.Fallback>
-                  </Avatar>
-                </li>
-                <li>
-                  <Button variant="danger-soft">Sign Out</Button>
-                </li>
+              <div className="flex gap-3 items-center">
+                {' '}
+                <Avatar>
+                  <Avatar.Image referrerPolicy='no-referrer' alt="John Doe" src={user?.image} />
+                  <Avatar.Fallback>{user.name.charAt(0)}</Avatar.Fallback>
+                </Avatar>
+                <Button onClick={handleSignOut} variant="danger-soft">
+                  Sign Out
+                </Button>
               </div>
             </>
           ) : (

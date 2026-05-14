@@ -15,6 +15,7 @@ import Link from 'next/link';
 import { authClient } from '@/lib/auth-client';
 import { redirect, useRouter } from 'next/navigation';
 import toast, { Toaster } from 'react-hot-toast';
+import { FcGoogle } from 'react-icons/fc';
 
 const SignupPage = () => {
   const router = useRouter()
@@ -42,9 +43,16 @@ const SignupPage = () => {
     }
   };
 
+  const handleGoogleSignin = async () => {
+    await authClient.signIn.social({
+    provider: "google"
+  })
+}
+
+
   return (
     <div className="max-w-7xl mx-auto mt-14">
-      <Toaster position='top-right'></Toaster>
+      <Toaster position="top-right"></Toaster>
       <div className="text-center justify-center mb-5">
         <h1 className="text-2xl font-semibold">Create Account</h1>
         <p className="text-gray-500">Start your adventure with Wanderlust</p>
@@ -116,10 +124,11 @@ const SignupPage = () => {
         <div className="text-center justify-center space-y-5">
           <p>Or signup with</p>
           <Button
+            onClick={handleGoogleSignin}
             variant="outline"
-            className="w-full rounded-none text-md font-bold"
+            className="w-full rounded-none text-md font-bold items-center"
           >
-            Signup With Google
+            <FcGoogle /> Signup With Google
           </Button>
           <p>
             Already have an account?{' '}

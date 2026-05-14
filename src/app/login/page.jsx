@@ -15,9 +15,10 @@ import Link from 'next/link';
 import { authClient } from '@/lib/auth-client';
 import { redirect, useRouter } from 'next/navigation';
 import toast, { Toaster } from 'react-hot-toast';
+import { FcGoogle } from 'react-icons/fc';
 
-const LoginPage= () => {
-  const router = useRouter()
+const LoginPage = () => {
+  const router = useRouter();
   const onSubmit = async e => {
     e.preventDefault();
     const formData = new FormData(e.target);
@@ -27,30 +28,34 @@ const LoginPage= () => {
       email: user.email,
       password: user.password,
     });
-console.log(data,error);
+    console.log(data, error);
     if (data) {
-      toast.success('Account create successfull')
+      toast.success('Account create successfull');
 
       setTimeout(() => {
-        router.push('/')
-      },1500)
+        router.push('/');
+      }, 1500);
     }
     if (error) {
-      toast.error(error.message)
+      toast.error(error.message);
     }
   };
 
+  const handleGoogleSignin = async () => {
+    await authClient.signIn.social({
+    provider: "google"
+  })
+}
+
   return (
     <div className="max-w-7xl mx-auto mt-14">
-      <Toaster position='top-right'></Toaster>
+      <Toaster position="top-right"></Toaster>
       <div className="text-center justify-center mb-5">
         <h1 className="text-2xl font-semibold">Create Account</h1>
         <p className="text-gray-500">Start your adventure with Wanderlust</p>
       </div>
       <Card className="bg-white shadow-2xl">
         <Form onSubmit={onSubmit} className="flex w-96 flex-col gap-4">
-        
-
           <TextField
             isRequired
             name="email"
@@ -105,10 +110,11 @@ console.log(data,error);
         <div className="text-center justify-center space-y-5">
           <p>Or signup with</p>
           <Button
+            onClick={handleGoogleSignin}
             variant="outline"
             className="w-full rounded-none text-md font-bold"
           >
-            Signup With Google
+            <FcGoogle />Signup With Google
           </Button>
           <p>
             Already have an account?{' '}
