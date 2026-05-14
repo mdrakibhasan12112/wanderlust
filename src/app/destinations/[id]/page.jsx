@@ -14,6 +14,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { EditForm } from '@/components/EditForm';
 import { DeleteData } from '@/components/DeleteData';
+import BookingCard from '@/components/BookingCard';
 
 const DestinationDetailsPage = async ({ params }) => {
   const { id } = await params;
@@ -26,7 +27,6 @@ const DestinationDetailsPage = async ({ params }) => {
     departureDate,
     description,
     imageUrl,
-    price,
     destinationName,
     duration,
     country,
@@ -118,51 +118,7 @@ const DestinationDetailsPage = async ({ params }) => {
         </div>
 
         {/* Right Side: Booking Card */}
-        <div className="lg:col-span-1">
-          <Card className="border shadow-sm p-2" radius="lg">
-            <div className="p-6">
-              <div className="mb-6">
-                <p className="text-gray-500 text-sm">Starting from</p>
-                <div className="flex items-baseline gap-1">
-                  <span className="text-3xl font-bold text-cyan-500">
-                    ${price}
-                  </span>
-                  <span className="text-gray-500 text-sm">per person</span>
-                </div>
-              </div>
-
-              <div className="mb-6 bg-gray-50 p-3 rounded-md border border-gray-100">
-                <p className="text-xs text-gray-400 mb-1">Departure Date</p>
-                <p className="font-medium">{departureDate}</p>
-              </div>
-
-              <Button
-                color="primary"
-                className="w-full bg-cyan-500 h-12 text-lg font-medium mb-6"
-                // endContent={<ArrowRight size={20} />}
-              >
-                Book Now
-              </Button>
-
-              {/* <Divider className="my-4" /> */}
-
-              <ul className="space-y-3">
-                <li className="flex items-center gap-2 text-sm text-gray-600">
-                  <CheckCircle2 size={16} className="text-green-500" /> Free
-                  cancellation up to 7 days
-                </li>
-                <li className="flex items-center gap-2 text-sm text-gray-600">
-                  <CheckCircle2 size={16} className="text-green-500" /> Travel
-                  insurance included
-                </li>
-                <li className="flex items-center gap-2 text-sm text-gray-600">
-                  <CheckCircle2 size={16} className="text-green-500" /> 24/7
-                  customer support
-                </li>
-              </ul>
-            </div>
-          </Card>
-        </div>
+        <BookingCard destination={destination}></BookingCard>
       </div>
     </div>
   );
