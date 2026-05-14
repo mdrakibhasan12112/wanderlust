@@ -1,10 +1,15 @@
 'use client';
 import { useState } from 'react';
-import { Link, Button } from '@heroui/react';
+import { Link, Button, Avatar } from '@heroui/react';
 import Image from 'next/image';
+import { authClient } from '@/lib/auth-client';
 
 export default function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+  const { data: session } = authClient.useSession();
+  const user = session?.user
+  console.log(user);
 
   return (
     <nav className="sticky top-0 z-40 w-full border-b border-separator bg-background/70 backdrop-blur-lg">
@@ -72,10 +77,34 @@ export default function Navbar() {
         </ul>
         <div className="hidden items-center gap-4 md:flex">
           <Link href="/profile">Profile</Link>
-          <Link href="/login">Login</Link>
-          <Link href="/signup">
-            <Button variant='secondary'>Sign Up</Button>
-          </Link>
+          {user ? (
+            <>
+              <div className='flex gap-3 items-center'>
+                <li>
+                  {' '}
+                  <Avatar>
+                    <Avatar.Image alt="John Doe" src={user?.image} />
+                    <Avatar.Fallback>{user.name.charAt(0)}</Avatar.Fallback>
+                  </Avatar>
+                </li>
+                <li>
+                  <Button variant="danger-soft">Sign Out</Button>
+                </li>
+              </div>
+            </>
+          ) : (
+            <>
+              <Link href="/login" className="block py-2">
+                Login
+              </Link>
+
+              <Link href="/signup">
+                <Button className="w-full" variant="secondary">
+                  Sign Up
+                </Button>
+              </Link>
+            </>
+          )}
         </div>
       </header>
       {isMenuOpen && (
@@ -87,10 +116,7 @@ export default function Navbar() {
               </Link>
             </li>
             <li>
-              <Link
-                href="/destinations"
-                className="block py-2 font-medium"
-              >
+              <Link href="/destinations" className="block py-2 font-medium">
                 Destinations
               </Link>
             </li>
@@ -113,8 +139,10 @@ export default function Navbar() {
                 Login
               </Link>
 
-              <Link href='/signup'>
-                <Button className="w-full" variant='secondary'>Sign Up</Button>
+              <Link href="/signup">
+                <Button className="w-full" variant="secondary">
+                  Sign Up
+                </Button>
               </Link>
             </li>
           </ul>
