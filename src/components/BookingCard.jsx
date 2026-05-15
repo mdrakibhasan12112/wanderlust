@@ -4,6 +4,7 @@ import { CheckCircle2 } from 'lucide-react';
 import { DateField, Label } from '@heroui/react';
 import React, { useState } from 'react';
 import { authClient } from '@/lib/auth-client';
+import toast, { Toaster } from 'react-hot-toast';
 
 const BookingCard = ({ destination }) => {
  const { data: session } = authClient.useSession();
@@ -34,11 +35,12 @@ const BookingCard = ({ destination }) => {
   });
   const data = await res.json()
   console.log(data);
-
+toast.success('You booked successfully')
  }
 
  return (
-   <div className="lg:col-span-1">
+  <div className="lg:col-span-1">
+   <Toaster position='top-right'/>
      <Card className="border shadow-sm p-2" radius="lg">
        <div className="p-6">
          <div className="mb-6">
