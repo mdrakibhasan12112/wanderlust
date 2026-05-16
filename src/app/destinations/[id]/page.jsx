@@ -15,13 +15,23 @@ import Link from 'next/link';
 import { EditForm } from '@/components/EditForm';
 import { DeleteData } from '@/components/DeleteData';
 import BookingCard from '@/components/BookingCard';
+import { auth } from '@/lib/auth';
+import { headers } from 'next/headers';
 
 const DestinationDetailsPage = async ({ params }) => {
   const { id } = await params;
-
-  const res = await fetch(`http://localhost:5000/destinations/${id}`);
+  // secure backend
+  const { token } = await auth.api.getToken({
+    headers: await headers(),
+  });
+  console.log(token);
+  const res = await fetch(`http://localhost:5000/destinations/${id}`, {
+    headers: {
+      authorization:`Bearer ${token}`
+    }
+  })
   const destination = await res.json();
-  console.log(destination);
+  // console.log(destination);
 
   const {
     departureDate,
