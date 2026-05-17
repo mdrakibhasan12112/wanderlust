@@ -1,5 +1,6 @@
 'use client';
 
+import { authClient } from '@/lib/auth-client';
 import { Envelope } from '@gravity-ui/icons';
 import { Button, FieldError, Input, Label, ListBox, Modal, Surface, TextArea, TextField,Select } from '@heroui/react';
 import { Edit } from 'lucide-react';
@@ -24,13 +25,19 @@ export function EditForm({destination}) {
    const destination = Object.fromEntries(formData.entries());
    console.log(destination);
 
-   const res = await fetch(`http://localhost:5000/destinations/${_id}`, {
-     method: 'PATCH',
-     headers: {
-       'content-type': 'application/json',
+    const { data: tokenData } = await authClient.token()
+      console.log(tokenData);
+   const res = await fetch(
+     `${process.env.NEXT_PUBLIC_SERVER_URL}/destinations/${_id}`,
+     {
+       method: 'PATCH',
+       headers: {
+         'content-type': 'application/json',
+         authorization: ` Bearer ${tokenData?.token}`,
+       },
+       body: JSON.stringify(destination),
      },
-     body: JSON.stringify(destination),
-   });
+   );
    const data = await res.json();
    console.log(data);
  };
